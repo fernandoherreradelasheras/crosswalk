@@ -22,7 +22,7 @@ _version_template = "full = \"@MAJOR@.@MINOR@.@BUILD@.@PATCH@\""
 # The file containing the Chrome version number.
 chrome_version_file = "//chrome/VERSION"
 
-_result = exec_script("//build/util/version.py",
+_chrome_result = exec_script("//build/util/version.py",
                       [
                         "-f",
                         rebase_path(chrome_version_file, root_build_dir),
@@ -31,12 +31,12 @@ _result = exec_script("//build/util/version.py",
                       ],
                       "scope",
                       [ chrome_version_file ])
-chrome_version = _result.full
+chrome_version = _chrome_result.full
 
 # The file containing the Crosswalk version number.
 xwalk_version_file = "//xwalk/VERSION"
 
-_result = exec_script("//build/util/version.py",
+_xwalk_result = exec_script("//build/util/version.py",
                       [
                         "-f",
                         rebase_path(xwalk_version_file, root_build_dir),
@@ -45,7 +45,7 @@ _result = exec_script("//build/util/version.py",
                       ],
                       "scope",
                       [ xwalk_version_file ])
-xwalk_version = _result.full
+xwalk_version = _xwalk_result.full
 
 if (is_android) {
   import("//build/config/android/config.gni")
@@ -53,7 +53,7 @@ if (is_android) {
   # Get xwalk API version
   _xwalk_api_version_template = "api = \"@API@\" min_api = \"@MIN_API@\""
   xwalk_api_version_file = "//xwalk/API_VERSION"
-  _result = exec_script("//build/util/version.py",
+  _xwalk_api_result = exec_script("//build/util/version.py",
                         [
                           "-f",
                           rebase_path(xwalk_api_version_file, root_build_dir),
@@ -62,16 +62,16 @@ if (is_android) {
                         ],
                         "scope",
                         [ xwalk_api_version_file ])
-  api_version = _result.api
-  min_api_version = _result.min_api
+  api_version = _xwalk_api_result.api
+  min_api_version = _xwalk_api_result.min_api
 
   # Get xwalk_version_code
-  _result = exec_script("//xwalk/build/android/generate_version_code.py",
+  _xwalk_version_result = exec_script("//xwalk/build/android/generate_version_code.py",
                         [
                           "--abi-name=$android_app_abi",
                           "--version=$xwalk_version",
                         ],
                         "trim string",
                         [ xwalk_version_file ])
-  xwalk_version_code = _result
+  xwalk_version_code = _xwalk_version_result
 }
