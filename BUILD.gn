@@ -367,7 +367,6 @@ source_set("xwalk_runtime") {
     "//components/autofill/content/renderer",
     "//components/autofill/core/browser",
     "//components/cdm/renderer",
-    "//components/devtools_http_handler",
     "//components/resources:components_resources",
     "//components/strings",
     "//components/url_formatter",
