@@ -2,8 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//chrome/version.gni")
-
+import("//build/util/process_version.gni")
 # This template provides a target to generate a Maven POM XML file that can
 # later be used in Maven repositories.
 # It takes a template POM and substitutes the values @ARTIFACT_ID@ and
@@ -36,6 +35,10 @@ template("maven_pom") {
   _artifact_version = invoker.artifact_version
 
   process_version(target_name) {
+    sources = [
+      "//chrome/VERSION",
+    ]
+
     forward_variables_from(invoker, [ "deps" ])
     template_file = invoker.pom_input
     output = invoker.pom_output
